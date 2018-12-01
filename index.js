@@ -1,9 +1,12 @@
-const { graphql, buildSchema } = require('graphql')
+const express = require('express')
+const graphqlHTTP = require('express-graphql')
+const app = express()
+const { buildSchema } = require('graphql')
 
 const db = {
     users: [
-        {id:1,name:'Saravanan',email:'sar@gam.com'},
-        {id:2,name:'Deepak',email:'max@gam.com'}
+        {id:1,name:'Saravanan',email:'sar@gam.com',avatarUrl:'https://www.image1.com'},
+        {id:2,name:'Deepak',email:'max@gam.com',avatarUrl:'https://www.image2.com'}
     ]
 }
 const schema = buildSchema(`
@@ -11,16 +14,20 @@ const schema = buildSchema(`
         users:[User!]!
     }
     type User{
-        id:ID!,
-        name:String,
+        id:ID!
+        name:String
         email:String!
+        avatarUrl:String
     }
 `)
 const rootValue = {
     users: () => db.users
 }
-graphql(schema,
-    `{
-        users{name,id,email}
-    }`,
-    rootValue).then(res=>console.dir(res,{depth:null}))
+
+app.use('/graphql',graphqlHTTP({
+    schema,
+    rootValue,
+    graphiql:true
+}))
+
+app.listen(3000,()=>console.log('Listening on port 3000'))
