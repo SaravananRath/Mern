@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts":{
+    "watch":"nodemon"
+  },
   "dependencies": {
-    "express": "^4.16.4",
-    "express-graphql": "^0.7.1",
+    "apollo-server": "^2.3.1",
     "graphql": "^14.0.2"
   },
   "devDependencies": {
+    "nodemon": "^1.18.9",
     "supervisor": "^0.12.0"
   }
 }
