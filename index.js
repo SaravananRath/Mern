@@ -57,5 +57,5 @@ const resolvers = {
 	}
 }
 
-const server = new ApolloServer({typeDefs,mocks:true}) 
+const server = new ApolloServer({typeDefs,resolvers}) 
 server.listen().then(({url})=> console.log(url))
