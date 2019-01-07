@@ -9,14 +9,9 @@ const userSchema = new mongoose.Schema({ email: String,
   timestamps: true
 })
 
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', async function () {
   if (this.isModified('password')) {
-    try {
-      this.password = await hash(this.password, 10)
-    } catch (err) {
-      next(err)
-    }
-    next()
+    this.password = await hash(this.password, 10)
   }
 })
 
