@@ -1,7 +1,14 @@
 import mongoose from 'mongoose'
 import { hash } from 'bcryptjs'
 
-const userSchema = new mongoose.Schema({ email: String,
+const userSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    validate: {
+      validator: email => User.where({ email }).countDocuments() === 0,
+      message: ({ value }) => `${value} already exists`
+    }
+  },
   username: String,
   name: String,
   password: String
@@ -15,4 +22,5 @@ userSchema.pre('save', async function () {
   }
 })
 
-export default mongoose.model('User', userSchema)
+const User = mongoose.model('User', userSchema)
+export default User
