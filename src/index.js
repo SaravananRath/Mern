@@ -5,14 +5,15 @@ import resolvers from './resolvers'
 import mongoose from 'mongoose'
 import {
   APP_PORT,
+  IN_PROD
+} from './config'
+const {
   DB_USERNAME,
   DB_PASSWORD,
   DB_HOST,
   DB_PORT,
-  DB_NAME,
-  IN_PROD
-} from './config'
-
+  DB_NAME
+} = process.env;
 (async () => {
   try {
     await mongoose.connect(
